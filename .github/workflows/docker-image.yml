@@ -22,6 +22,6 @@ jobs:
         password: 'HjXjHbqWd=WCGnDFswYkTKCz=ZG9yn7J'
 
     - name: Build the Docker image
-    - run: | 
-        docker build . --file Dockerfile --tag azurehospitalitydocker/my-image-name:$(date +%s)
-        docker push azurehospitalitydocker/my-image-name:$(date +%s)
+      run: | 
+          docker build . --file Dockerfile --tag azurehospitalitydocker/my-image-name:$(date +%s)
+          docker push azurehospitalitydocker/my-image-name:$(date +%s)
