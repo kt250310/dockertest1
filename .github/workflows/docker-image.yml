@@ -14,10 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
     - uses: azure/docker-login@v1
       with:
         login-server: 'azurehospitalitydocker.azurecr.io' # default: index.docker.io
         username: 'azurehospitalitydocker'
         password: 'HjXjHbqWd=WCGnDFswYkTKCz=ZG9yn7J'
+
+    - name: Build the Docker image
+    - run: | 
+        docker build . --file Dockerfile --tag azurehospitalitydocker/my-image-name:$(date +%s)
+        docker push azurehospitalitydocker/my-image-name:$(date +%s)
