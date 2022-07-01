@@ -25,21 +25,19 @@ jobs:
       run: | 
           docker build . --file Dockerfile --tag azurehospitalitydocker.azurecr.io/my-image-name:$(date +%u%I%M)
           docker push azurehospitalitydocker.azurecr.io/my-image-name:$(date +%u%I%M)
-          
+   
   build-and-push-to-gcr:
-    name: "Bulding and pushing images"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: "Building and pushing the image"
-        uses: ./
+      - uses: RafikFarhad/push-to-gcr-github-action@v4.1
         with:
           gcloud_service_key: ${{ secrets.gcloud_service_key }}
           registry: gcr.io
           project_id: hsp-sre-research-cug01-prep
-          image_name: image1
-          image_tag: test-$(date +%u%I%M)
-          dockerfile: ./Dockerfile
-          context: ./
-          target: build
+          image_name: azurehospitalitydocker.azurecr.io/my-image-name:$(date +%u%I%M)
+          push_only: true
    
+   
+   
+ 
