@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  build-push-to-azure:
 
     runs-on: ubuntu-latest
 
@@ -25,3 +25,21 @@ jobs:
       run: | 
           docker build . --file Dockerfile --tag azurehospitalitydocker.azurecr.io/my-image-name:$(date +%u%I%M)
           docker push azurehospitalitydocker.azurecr.io/my-image-name:$(date +%u%I%M)
+          
+  build-and-push-to-gcr:
+    name: "Bulding and pushing images"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Building and pushing the image"
+        uses: ./
+        with:
+          gcloud_service_key: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
+          registry: gcr.io
+          project_id: pro-chesta
+          image_name: hello-world-by-push-to-gcr
+          image_tag: test-${{ github.sha }}, ${{ github.sha }}
+          dockerfile: ./test/Dockerfile.test
+          context: ./test
+          target: build
+   
