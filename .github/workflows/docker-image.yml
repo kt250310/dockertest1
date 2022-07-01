@@ -34,12 +34,12 @@ jobs:
       - name: "Building and pushing the image"
         uses: ./
         with:
-          gcloud_service_key: ${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}
+          gcloud_service_key: ${{ secrets.gcloud_service_key }}
           registry: gcr.io
-          project_id: pro-chesta
-          image_name: hello-world-by-push-to-gcr
-          image_tag: test-${{ github.sha }}, ${{ github.sha }}
-          dockerfile: ./test/Dockerfile.test
-          context: ./test
+          project_id: hsp-sre-research-cug01-prep
+          image_name: image1
+          image_tag: test-$(date +%u%I%M)
+          dockerfile: ./Dockerfile
+          context: ./
           target: build
    
